@@ -57,7 +57,7 @@ edgeguard benchmark --json benchmark.json
 ```python
 from edgeguard import FEATURES, generate_synthetic, get_detector, classification_report
 
-train = generate_synthetic(2000, anomaly_ratio=0.0, seed=1)   # период нормальной работы
+train = generate_synthetic(2000, anomaly_ratio=0.0, seed=1)  # период нормальной работы
 test = generate_synthetic(2000, anomaly_ratio=0.05, seed=2)
 
 detector = get_detector("zscore").fit(train[FEATURES].to_numpy())
