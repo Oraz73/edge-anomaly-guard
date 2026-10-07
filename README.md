@@ -1,6 +1,6 @@
 # EdgeGuard — обнаружение аномалий в IoT-телеметрии умного города на edge-устройствах
 
-[![CI](https://github.com/USERNAME/edge-anomaly-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/USERNAME/edge-anomaly-guard/actions/workflows/ci.yml)
+[![CI](https://github.com/Oraz73/edge-anomaly-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/Oraz73/edge-anomaly-guard/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue)
 
@@ -30,7 +30,7 @@
 Требуется Python 3.10 или новее.
 
 ```bash
-git clone https://github.com/USERNAME/edge-anomaly-guard.git
+git clone https://github.com/Oraz73/edge-anomaly-guard.git
 cd edge-anomaly-guard
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate

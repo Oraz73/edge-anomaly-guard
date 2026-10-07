@@ -9,7 +9,7 @@ description = "Лёгкий модуль обнаружения аномалий
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
-authors = [{ name = "USERNAME" }]
+authors = [{ name = "Oraz73" }]
 keywords = ["smart city", "edge ai", "anomaly detection", "iot", "security"]
 classifiers = [
     "Programming Language :: Python :: 3",
