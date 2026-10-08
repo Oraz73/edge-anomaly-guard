@@ -52,6 +52,18 @@ edgeguard detect -i sample.csv -m iforest -o detected.csv --plot anomalies.png
 edgeguard benchmark --json benchmark.json
 ```
 
+### Веб-интерфейс
+
+Простой графический интерфейс в браузере: выбор данных и метода, график с аномалиями,
+метрики качества и сравнение методов.
+
+```bash
+pip install streamlit
+streamlit run app.py
+```
+
+После запуска интерфейс откроется в браузере по адресу http://localhost:8501.
+
 ### Из Python
 
 ```python
@@ -97,6 +109,7 @@ edge-anomaly-guard/
 │   ├── benchmark.py     # оценка ресурсов для edge
 │   ├── visualize.py     # графики
 │   └── cli.py           # командная строка
+├── app.py               # веб-интерфейс (Streamlit)
 ├── tests/               # автоматические тесты (pytest)
 ├── docs/                # изображения для документации
 ├── .github/workflows/   # CI/CD (GitHub Actions)
