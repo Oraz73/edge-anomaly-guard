@@ -9,7 +9,7 @@
 Модуль обнаруживает аномалии (возможные атаки и сбои) в сетевой и системной
 телеметрии IoT-устройств и оценивает, насколько метод подходит для работы
 непосредственно на периферийном устройстве: измеряет точность, задержку
-обработки одной записи и размер модели. https://edge-anomaly-guard-pwj4wgpavckzkfkyaxmcm3.streamlit.app/
+обработки одной записи и размер модели.
 
 ![Пример обнаруженных аномалий](docs/anomalies_example.png)
 
@@ -97,6 +97,30 @@ CSV-файл со столбцами `packets_per_sec`, `bytes_per_sec`, `conn_c
 Это показывает, что для edge-устройств сложная модель не всегда лучше
 и выбор метода нужно подтверждать измерениями.
 
+## Docker
+
+Образ собирается в несколько этапов: `test` (запуск тестов) и `runtime` (рабочий образ с CLI и веб-интерфейсом).
+
+```bash
+docker build --target runtime -t edgeguard .
+docker run --rm -p 8501:8501 edgeguard                 # веб-интерфейс: http://localhost:8501
+docker run --rm edgeguard edgeguard benchmark          # командная строка
+```
+
+## Jenkins CI/CD
+
+Готовый сервер Jenkins настраивается автоматически (Configuration as Code) и сам создаёт задачу `edgeguard`:
+
+```bash
+cd jenkins
+docker compose up -d --build      # http://localhost:8080, логин admin / admin123
+```
+
+Конвейер из [`Jenkinsfile`](Jenkinsfile) запускается при каждом коммите (опрос GitHub раз в 2 минуты):
+тесты в контейнере → сборка Docker-образа → smoke-тест → (опционально) публикация в Docker Hub →
+развёртывание на тестовый сервер http://localhost:8501.
+Для Kubernetes (Minikube или Docker Desktop) есть манифест [`k8s/deployment.yaml`](k8s/deployment.yaml).
+
 ## Структура проекта
 
 ```
@@ -113,6 +137,10 @@ edge-anomaly-guard/
 ├── tests/               # автоматические тесты (pytest)
 ├── docs/                # изображения для документации
 ├── .github/workflows/   # CI/CD (GitHub Actions)
+├── Dockerfile           # контейнеризация (stages: test, runtime)
+├── Jenkinsfile          # конвейер Jenkins
+├── jenkins/             # сервер Jenkins: Dockerfile, плагины, JCasC, docker-compose
+├── k8s/                 # манифесты Kubernetes
 ├── pyproject.toml       # зависимости и настройки инструментов
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md

@@ -1,0 +1,40 @@
+# Jenkins Configuration as Code (JCasC).
+# Jenkins starts already configured: no setup wizard, an admin user and the pipeline job.
+jenkins:
+  systemMessage: "EdgeGuard CI/CD server (configured as code)"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"
+
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+
+jobs:
+  - script: >
+      pipelineJob('edgeguard') {
+        description('EdgeGuard: unit tests, Docker image build, smoke test, deploy. Definition: Jenkinsfile in the repository.')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('https://github.com/Oraz73/edge-anomaly-guard.git') }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(true)
+          }
+        }
+      }

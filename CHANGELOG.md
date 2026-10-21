@@ -3,6 +3,15 @@
 Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/),
 версии следуют [семантическому версионированию](https://semver.org/lang/ru/).
 
+## [0.2.0] — 2026-10-21
+
+### Добавлено
+- Веб-интерфейс на Streamlit (`app.py`).
+- Многоэтапный `Dockerfile` (тесты и рабочий образ) и `.dockerignore`.
+- Конвейер Jenkins (`Jenkinsfile`): тесты, сборка образа, smoke-тест, публикация в Docker Hub, развёртывание.
+- Сервер Jenkins с автоматической настройкой (`jenkins/`), манифест Kubernetes (`k8s/`).
+- Проверка Docker-образа в GitHub Actions.
+
 ## [0.1.0] — 2026-10-07
 
 ### Добавлено

@@ -72,3 +72,26 @@ jobs:
         with:
           name: demo-results
           path: results/
+
+  docker:
+    name: Сборка и проверка Docker-образа
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Тесты внутри контейнера (stage test)
+        run: |
+          docker build --target test -t edgeguard:test .
+          docker run --rm edgeguard:test
+      - name: Сборка рабочего образа (stage runtime)
+        run: docker build --target runtime -t edgeguard:ci .
+      - name: Smoke-тест CLI в контейнере
+        run: docker run --rm edgeguard:ci edgeguard benchmark -n 300
+      - name: Проверка веб-интерфейса (healthcheck)
+        run: |
+          docker run -d --name eg -p 8501:8501 edgeguard:ci
+          for i in $(seq 1 30); do
+            s=$(docker inspect -f '{{.State.Health.Status}}' eg); echo "$s"
+            [ "$s" = "healthy" ] && exit 0; sleep 3
+          done
+          docker logs eg; exit 1

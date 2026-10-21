@@ -5,13 +5,24 @@ Run:  streamlit run app.py
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
-from edgeguard import FEATURES, classification_report, generate_synthetic, get_detector
-from edgeguard.benchmark import model_size_bytes, run_benchmark
-from edgeguard.preprocess import clean
-from edgeguard.visualize import plot_anomalies
+# Allow running without installing the package (e.g. on Streamlit Community Cloud).
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+
+from edgeguard import (  # noqa: E402
+    FEATURES,
+    classification_report,
+    generate_synthetic,
+    get_detector,
+)
+from edgeguard.benchmark import model_size_bytes, run_benchmark  # noqa: E402
+from edgeguard.preprocess import clean  # noqa: E402
+from edgeguard.visualize import plot_anomalies  # noqa: E402
 
 HELP = {
     "precision": "Share of alarms that were real attacks",
