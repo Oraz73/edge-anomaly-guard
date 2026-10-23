@@ -193,4 +193,5 @@ pytest
 
 Проект распространяется по лицензии MIT, см. [LICENSE](LICENSE).
 
-   Jenkins auto build test
+   Jenkins auto build test 
+   test 2
